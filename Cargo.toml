@@ -4,3 +4,8 @@ version = "0.1.0"
 authors = ["ForsakenHarmony <ForsakenHarmony@users.noreply.github.com>"]
 
 [dependencies]
+amethyst = { git = "https://github.com/amethyst/amethyst.git", branch = "develop" }
+obj-rs = "0.4.16"
+cgmath = "0.12"
+genmesh = "0.4"
+gfx = "0.12"
