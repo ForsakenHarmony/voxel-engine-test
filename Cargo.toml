@@ -1,0 +1,6 @@
+[package]
+name = "voxel-engine-test"
+version = "0.1.0"
+authors = ["ForsakenHarmony <ForsakenHarmony@users.noreply.github.com>"]
+
+[dependencies]
