@@ -2,7 +2,7 @@ use amethyst::engine::{State, Trans};
 use amethyst::ecs::{World};
 use amethyst::asset_manager::{AssetManager, DirectoryStore};
 use amethyst::event::WindowEvent;
-use amethyst::renderer::{Pipeline, VertexPosNormal};
+use amethyst::renderer::{Pipeline};
 use amethyst::components::rendering::{Mesh, Texture, TextureLoadData};
 use amethyst::world_resources::camera::{Camera};
 
@@ -15,13 +15,15 @@ use util::*;
 pub struct Example {
   t: f32,
   c: u32,
+  fps: f32,
 }
 
 impl Example {
   pub fn new() -> Example {
     Example {
-      t: 0.0,
+      t: 0.,
       c: 0,
+      fps: 0.,
     }
   }
 }
@@ -30,7 +32,7 @@ impl State for Example {
   fn on_start(&mut self, world: &mut World, asset_manager: &mut AssetManager, pipeline: &mut Pipeline) {
     use amethyst::renderer::pass::{Clear, DrawShaded};
     use amethyst::renderer::{Layer, Light};
-    use amethyst::components::transform::{Transform, LocalTransform};
+    use amethyst::components::transform::{Transform};
     use amethyst::world_resources::camera::{Projection};
     use amethyst::world_resources::ScreenDimensions;
     
@@ -44,7 +46,7 @@ impl State for Example {
         far: 100.0,
       };
       camera.projection = proj;
-      camera.eye = [2.0, 2.0, 2.0];
+      camera.eye = [-3.0, 5.0, 0.0];
       camera.target = [0.0, 0.0, 0.0];
       camera.up = [0.0, 1.0, 0.0];
     }
@@ -62,8 +64,8 @@ impl State for Example {
     asset_manager.load_asset_from_data::<Texture, [f32; 4]>("gray", [0.3, 0.3, 0.3, 1.0]);
     asset_manager.load_asset_from_data::<Texture, [f32; 4]>("green", [0.7, 1.0, 0.7, 1.0]);
     
-    asset_manager.load_asset_from_data::<Texture, [f32; 4]>("white", [0.8, 0.8, 0.8, 0.5]);
-    asset_manager.load_asset_from_data::<Texture, [f32; 4]>("grey", [0.4, 0.4, 0.4, 0.8]);
+    asset_manager.load_asset_from_data::<Texture, [f32; 4]>("white", [1.0, 1.0, 1.0, 1.0]);
+    asset_manager.load_asset_from_data::<Texture, [f32; 4]>("grey", [0.01, 0.01, 0.01, 1.0]);
     
     // Create a manual greenish texture
     let data = TextureLoadData {
@@ -87,50 +89,80 @@ impl State for Example {
     //         .with(Transform::default())
     //         .build();
     
-    let cube_vertices = gen_cube(1.0);
+    let cube_vertices = gen_cube();
     asset_manager.load_asset_from_data::<Mesh, Vec<_>>("cube", cube_vertices);
-    let cube = asset_manager.create_renderable("cube", "white", "grey").unwrap();
+    let cube = asset_manager.create_renderable("cube", "grey", "white").unwrap();
     
-    let mut cubeobj = Object::new();
-    cubeobj.size = 0.5;
-    cubeobj.position[0] = 1.0;
+    create_cube(0., 2., 0., world, cube.clone());
+    
+//    let mut cube_obj = Object::new();
+//    cube_obj.size = 1.;
+//    cube_obj.position[1] = 2.0;
+//    world.create_now()
+//         .with(cube)
+//         .with(cube_obj.get_transform())
+//         .with(cube_obj)
+//         .with(Transform::default())
+//         .build();
+    
+    let plane_vertices = gen_plane();
+    asset_manager.load_asset_from_data::<Mesh, Vec<_>>("plane", plane_vertices);
+    let plane = asset_manager.create_renderable("plane", "grey", "grassy").unwrap();
+    
+    let mut plane_obj = Object::new();
+    plane_obj.size = 8.;
     world.create_now()
-         .with(cube)
-         .with(cubeobj)
-         .with(LocalTransform::default())
+         .with(plane)
+         .with(plane_obj.get_transform())
+         .with(plane_obj)
          .with(Transform::default())
          .build();
     
+    //Sun
     let light = Light {
-      color: [0.0, 0.0, 1.0, 1.0],
-      radius: 10.0,
+      center: [0.0, 0.0, 4.0],
+      radius: 100.0,
+      color: [1.0, 1.0, 0.95, 1.0],
+      propagation_constant: 50.,
+      propagation_linear: 0.3,
+      propagation_r_square: 0.6,
+    };
+    
+    world.create_now()
+         .with(light)
+         .build();
+    
+    //RGB Lights
+    let light = Light {
       center: [-3.0, 3.0, -3.0],
-      propagation_constant: 0.2,
-      propagation_linear: 0.2,
-      propagation_r_square: 0.6,
-    };
-    
-    world.create_now()
-         .with(light)
-         .build();
-    
-    let light = Light {
-      color: [0.0, 1.0, 0.0, 1.0],
-      radius: 10.0,
-      center: [3.0, 3.0, -3.0],
-      propagation_constant: 0.2,
-      propagation_linear: 0.2,
-      propagation_r_square: 0.6,
-    };
-    
-    world.create_now()
-         .with(light)
-         .build();
-    
-    let light = Light {
-      color: [1.0, 0.0, 0.0, 1.0],
       radius: 20.0,
+      color: [0.0, 0.0, 1.0, 1.0],
+      propagation_constant: 0.2,
+      propagation_linear: 0.2,
+      propagation_r_square: 0.6,
+    };
+    
+    world.create_now()
+         .with(light)
+         .build();
+    
+    let light = Light {
+      center: [3.0, 3.0, -3.0],
+      radius: 20.0,
+      color: [0.0, 1.0, 0.0, 1.0],
+      propagation_constant: 0.2,
+      propagation_linear: 0.2,
+      propagation_r_square: 0.6,
+    };
+    
+    world.create_now()
+         .with(light)
+         .build();
+    
+    let light = Light {
       center: [0.0, 3.0, 3.0],
+      radius: 20.0,
+      color: [1.0, 0.0, 0.0, 1.0],
       propagation_constant: 0.2,
       propagation_linear: 0.2,
       propagation_r_square: 0.6,
@@ -143,8 +175,8 @@ impl State for Example {
     let layer =
     Layer::new("main",
                vec![
-               Clear::new([0.1, 0.1, 0.1, 1.0]),
-               DrawShaded::new("main", "main"),
+                 Clear::new([0.15, 0.15, 0.15, 1.0]),
+                 DrawShaded::new("main", "main"),
                ]);
     pipeline.layers = vec![layer];
   }
@@ -157,19 +189,19 @@ impl State for Example {
         Event::KeyboardInput(_, _, Some(VirtualKeyCode::Escape)) => return Trans::Quit,
         Event::KeyboardInput(_, _, Some(VirtualKeyCode::Right)) => {
           let mut camera = world.write_resource::<Camera>();
-          camera.eye[0] += 0.1;
+          camera.eye[2] += 0.1;
         }
         Event::KeyboardInput(_, _, Some(VirtualKeyCode::Left)) => {
           let mut camera = world.write_resource::<Camera>();
-          camera.eye[0] -= 0.1;
+          camera.eye[2] -= 0.1;
         }
         Event::KeyboardInput(_, _, Some(VirtualKeyCode::Down)) => {
           let mut camera = world.write_resource::<Camera>();
-          camera.eye[2] += 0.1;
+          camera.eye[0] -= 0.1;
         }
         Event::KeyboardInput(_, _, Some(VirtualKeyCode::Up)) => {
           let mut camera = world.write_resource::<Camera>();
-          camera.eye[2] -= 0.1;
+          camera.eye[0] += 0.1;
         }
         Event::KeyboardInput(_, _, Some(VirtualKeyCode::PageUp)) => {
           let mut camera = world.write_resource::<Camera>();
@@ -186,20 +218,21 @@ impl State for Example {
     Trans::None
   }
   
-  //  fn update(&mut self, world: &mut World, _: &mut AssetManager, _: &mut Pipeline) -> Trans {
-  //    use amethyst::world_resources::Time;
-  //
-  //    let time = world.read_resource::<Time>();
-  //    self.t += time.delta_time.subsec_nanos() as f32 / 1.0e9;
-  //    self.c += 1;
-  //
-  //    if self.t >= 1. {
-  //      println!("FPS: {}", self.c);
-  //
-  //      self.c = 0;
-  //      self.t -= 1.;
-  //    }
-  //
-  //    Trans::None
-  //  }
+  fn update(&mut self, world: &mut World, _: &mut AssetManager, _: &mut Pipeline) -> Trans {
+    use amethyst::world_resources::Time;
+    
+    let time = world.read_resource::<Time>();
+    self.t += time.delta_time.subsec_nanos() as f32 / 1.0e9;
+    self.c += 1;
+    
+    if self.t >= 1. {
+      self.fps = self.c as f32;
+      println!("FPS: {}", self.fps);
+      
+      self.c = 0;
+      self.t -= 1.;
+    }
+    
+    Trans::None
+  }
 }

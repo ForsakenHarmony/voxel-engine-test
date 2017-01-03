@@ -12,7 +12,7 @@ dependencies = [
 [[package]]
 name = "amethyst"
 version = "0.3.1"
-source = "git+https://github.com/amethyst/amethyst.git?branch=develop#b9cd9d04bb8b6f1bdc0c434aa8a4322ba7548625"
+source = "git+https://github.com/amethyst/amethyst.git?branch=develop#8bd9e9777b79bceb7e5be5fb565b3584640b877c"
 dependencies = [
  "amethyst_config 0.1.0 (git+https://github.com/amethyst/amethyst.git?branch=develop)",
  "amethyst_ecs 0.1.1 (git+https://github.com/amethyst/amethyst.git?branch=develop)",
@@ -28,7 +28,7 @@ dependencies = [
 [[package]]
 name = "amethyst_config"
 version = "0.1.0"
-source = "git+https://github.com/amethyst/amethyst.git?branch=develop#b9cd9d04bb8b6f1bdc0c434aa8a4322ba7548625"
+source = "git+https://github.com/amethyst/amethyst.git?branch=develop#8bd9e9777b79bceb7e5be5fb565b3584640b877c"
 dependencies = [
  "yaml-rust 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -36,7 +36,7 @@ dependencies = [
 [[package]]
 name = "amethyst_ecs"
 version = "0.1.1"
-source = "git+https://github.com/amethyst/amethyst.git?branch=develop#b9cd9d04bb8b6f1bdc0c434aa8a4322ba7548625"
+source = "git+https://github.com/amethyst/amethyst.git?branch=develop#8bd9e9777b79bceb7e5be5fb565b3584640b877c"
 dependencies = [
  "specs 0.7.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "time 0.1.35 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -45,7 +45,7 @@ dependencies = [
 [[package]]
 name = "amethyst_renderer"
 version = "0.3.1"
-source = "git+https://github.com/amethyst/amethyst.git?branch=develop#b9cd9d04bb8b6f1bdc0c434aa8a4322ba7548625"
+source = "git+https://github.com/amethyst/amethyst.git?branch=develop#8bd9e9777b79bceb7e5be5fb565b3584640b877c"
 dependencies = [
  "amethyst_ecs 0.1.1 (git+https://github.com/amethyst/amethyst.git?branch=develop)",
  "cgmath 0.11.0 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -97,7 +97,7 @@ name = "cgl"
 version = "0.1.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "gleam 0.2.29 (registry+https://github.com/rust-lang/crates.io-index)",
+ "gleam 0.2.30 (registry+https://github.com/rust-lang/crates.io-index)",
  "libc 0.2.18 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -296,7 +296,7 @@ dependencies = [
 
 [[package]]
 name = "gleam"
-version = "0.2.29"
+version = "0.2.30"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "gl_generator 0.5.2 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -795,7 +795,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 "checksum gfx_gl 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)" = "f25c3866329ab91b92bfbc4d5e1d8172607e804564d90b8fbecb96cbc366845d"
 "checksum gfx_window_glutin 0.12.0 (registry+https://github.com/rust-lang/crates.io-index)" = "6ee06adc23afa3bd415e7ae1f7a442bd8a61e11c8bffeb08d7a7ddd5f8bb4456"
 "checksum gl_generator 0.5.2 (registry+https://github.com/rust-lang/crates.io-index)" = "f1d8edc81c5ae84605a62f5dac661a2313003b26d59839f81d47d46cf0f16a55"
-"checksum gleam 0.2.29 (registry+https://github.com/rust-lang/crates.io-index)" = "1b83402229bde9d923f0b92811be017f9df5946ee86f8647367b1e02bcf5c293"
+"checksum gleam 0.2.30 (registry+https://github.com/rust-lang/crates.io-index)" = "6af023107aa969ccf8868a0304fead4b2f813c19aa9a6a243fddc041f3e51da5"
 "checksum glutin 0.6.2 (registry+https://github.com/rust-lang/crates.io-index)" = "06786fae66e7aa8464b3d8d3fb7a7c470f89d62ae511f9613ea7fbbeef61d680"
 "checksum itoa 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "ae3088ea4baeceb0284ee9eea42f591226e6beaecf65373e41b38d95a1b8e7a1"
 "checksum kernel32-sys 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)" = "7507624b29483431c0ba2d82aece8ca6cdba9382bff4ddd0f7490560c056098d"
