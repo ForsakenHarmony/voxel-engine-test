@@ -94,6 +94,10 @@ impl State for Example {
     let cube = asset_manager.create_renderable("cube", "grey", "white").unwrap();
     
     create_cube(0., 2., 0., world, cube.clone());
+    create_cube(1., 2., 1., world, cube.clone());
+    create_cube(1., 2., -1., world, cube.clone());
+    create_cube(-1., 2., 1., world, cube.clone());
+    create_cube(-1., 2., -1., world, cube.clone());
     
 //    let mut cube_obj = Object::new();
 //    cube_obj.size = 1.;
@@ -107,10 +111,10 @@ impl State for Example {
     
     let plane_vertices = gen_plane();
     asset_manager.load_asset_from_data::<Mesh, Vec<_>>("plane", plane_vertices);
-    let plane = asset_manager.create_renderable("plane", "grey", "grassy").unwrap();
+    let plane = asset_manager.create_renderable("plane", "grey", "white").unwrap();
     
     let mut plane_obj = Object::new();
-    plane_obj.size = 8.;
+    plane_obj.scale = 8.;
     world.create_now()
          .with(plane)
          .with(plane_obj.get_transform())
@@ -120,10 +124,10 @@ impl State for Example {
     
     //Sun
     let light = Light {
-      center: [0.0, 0.0, 4.0],
-      radius: 100.0,
+      center: [0.0, 1.0, 0.0],
+      radius: 1.0,
       color: [1.0, 1.0, 0.95, 1.0],
-      propagation_constant: 50.,
+      propagation_constant: 0.,
       propagation_linear: 0.3,
       propagation_r_square: 0.6,
     };
